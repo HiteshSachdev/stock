@@ -1,7 +1,5 @@
-from datetime import  datetime
-
-
-
+from datetime import datetime
+import math
 
 def max_difference(price_list, length):
     min_index, max_index = 0, 0
@@ -20,7 +18,7 @@ def max_difference(price_list, length):
 
 def analyze_stock(stocks, user_stock, start_date, end_date):
     stock_details_for_available_dates = []
-    price_list, sum_of_stock_prices = [], 0
+    price_list, sum_of_stock_prices, sum_differences, sd = [], 0, 0
     for stock in stocks:
         stock_name = stock['name']
         stock_date = datetime.strptime(stock['date'], "%d-%b-%Y")
@@ -34,6 +32,11 @@ def analyze_stock(stocks, user_stock, start_date, end_date):
             sum_of_stock_prices += stock_price
     mean_of_prices = sum_of_stock_prices // len(price_list)
     min_index, max_index, profit = max_difference(price_list, len(price_list))
+    for price in price_list:
+        sum_differences += (price - mean_of_prices)
+    sd = sum_differences*sum_differences // (len(price_list) - 1)
+    sd = math.sqrt(sd)
+    print("Your mean is: {mean} and standard deviation is: {sd}".format(mean=mean_of_prices, sd=sd))
     print("Here's your result:- Buy date: {bd}, Sell date: {sd}, Profit: {p} (for 100 shares)".format(
         bd=stock_details_for_available_dates[min_index]['stock_date'],
         sd=stock_details_for_available_dates[max_index]['stock_date'],
