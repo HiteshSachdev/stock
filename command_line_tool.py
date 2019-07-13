@@ -11,7 +11,7 @@ def process_user_request():
     for stock in stocks:
         stock_name = stock.name
         stock_found = False
-        if user_stock in stock_name:
+        if user_stock.lower() in stock_name.lower():
             if len(user_stock) < len(stock_name):
                 user_response = input("Oops! Do you mean {name}? y or n:- ".format(name=stock_name))
                 if user_response == 'y':
@@ -34,6 +34,10 @@ def process_user_request():
     end_date = input("Till which date do you want to analyze:- ")
     start_date = datetime.strptime(start_date, "%d-%b-%Y")
     end_date = datetime.strptime(end_date, "%d-%b-%Y")
+    analyze_stock.analyze_stock(user_stock, start_date, end_date)
 
+    user_response = input("Do you want to continue?:- y or n")
+    if user_response:
+        process_user_request()
 
 process_user_request()
