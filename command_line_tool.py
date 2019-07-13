@@ -55,6 +55,8 @@ def process_user_request():
                         suggestion_count -= 1
                         suggested_stocks.append(stock_name)
                         if suggest_a_stock(stock_name):
+                            user_stock = stock_name
+                            stock_found = True
                             break
                         else:
                             continue
@@ -65,6 +67,10 @@ def process_user_request():
                         suggestion_count = 2
                         suggested_stocks.append(stock_name)
                         suggest_a_stock(stock_name)
+                        if suggest_a_stock(stock_name):
+                            user_stock = stock_name
+                            stock_found = True
+                            break
                         suggestion_count -= 1
                         continue
                     else:
